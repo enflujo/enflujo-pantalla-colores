@@ -7,6 +7,12 @@ La placa dentro de la pantalla es LoL1n new NodeMcu v3
 
 la pantalla está conectada al pin GPIO 4
 
+## Placa y puerto en Arduino
+
+![placa y puerto](./placa-puerto.png)
+
+El nombre de la placa es: NodeMCU (ESP-12E Module)
+
 ```cpp
 #include <Adafruit_GFX.h>
 #include <Adafruit_NeoMatrix.h>
