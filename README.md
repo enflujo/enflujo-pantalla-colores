@@ -16,6 +16,10 @@ El nombre de la placa es: NodeMCU (ESP-12E Module)
 ```cpp
 #include <Adafruit_GFX.h>
 #include <Adafruit_NeoMatrix.h>
+// #include <Fonts/FreeMonoBoldOblique12pt7b.h>
+// #include <Fonts/FreeSerif9pt7b.h>
+// tft.setFont(&FreeMonoBoldOblique12pt7b);
+// tft.setFont();
 #ifndef PSTR
 #define PSTR
 #endif
@@ -25,12 +29,9 @@ El nombre de la placa es: NodeMCU (ESP-12E Module)
 #include <avr/power.h>
 #endif
 
+
 #define LED_PIN    4
-
-// How many NeoPixels are attached to the Arduino?
 #define LED_COUNT 192
-
-// Declare our NeoPixel strip object:
 Adafruit_NeoPixel strip(LED_COUNT, LED_PIN, NEO_GRB + NEO_KHZ800);
 // Argument 1 = Number of pixels in NeoPixel strip
 // Argument 2 = Arduino pin number (most are valid)
@@ -47,69 +48,93 @@ Adafruit_NeoMatrix matrix = Adafruit_NeoMatrix(8, 8, 3, 1, LED_PIN,
   NEO_GRB + NEO_KHZ800);
 
 const uint16_t colors[] = {
-  matrix.Color(255, 127, 0), matrix.Color(87, 35, 100), matrix.Color(0, 0, 255) };
+  matrix.Color(255, 127, 0),
+  matrix.Color(87, 35, 100),
+  matrix.Color(0, 0, 255)
+  };
 // setup() function -- runs once at startup --------------------------------
 
 void setup() {
+  Serial.begin(9600);
   // These lines are specifically to support the Adafruit Trinket 5V 16 MHz.
   // Any other board, you can remove this part (but no harm leaving it):
-#if defined(__AVR_ATtiny85__) && (F_CPU == 16000000)
-  clock_prescale_set(clock_div_1);
-#endif
+  #if defined(__AVR_ATtiny85__) && (F_CPU == 16000000)
+    clock_prescale_set(clock_div_1);
+  #endif
   // END of Trinket-specific code.
   matrix.begin();
   matrix.setTextWrap(false);
   matrix.setBrightness(150);
   matrix.setTextColor(colors[0]);
   
-  strip.begin();           // INITIALIZE NeoPixel strip object (REQUIRED)
-  strip.show();            // Turn OFF all pixels ASAP
-  strip.setBrightness(50); // Set BRIGHTNESS to about 1/5 (max = 255)
+  strip.begin();            // INITIALIZE NeoPixel strip object (REQUIRED)
+  strip.show();             // Turn OFF all pixels ASAP
+  strip.setBrightness(255); // Set BRIGHTNESS to about 1/5 (max = 255)
 }
+
+/**
+á String(char(160))
+ó String(char(162))
+ñ String(char(164))
+*/
 int x    = matrix.width();
 int pass = 0;
 boolean flag1 = true;
 boolean flag2 = false;
-String Palabra = "..:: EnFlujo";
-String Palabra2 = "::..";
-int Longitud = Palabra.length();
-int Longitud2 = Palabra2.length();
+String Frase0 = String(char(164));
+String Frase1 = "Si la crisis lleva 20 a" + String(char(164)) + "os, tal vez ya no es una crisis.";
+String Frase2 = "Los medios independientes no son obsoletos, tu iPhone s" + String(char(161)) + ".";
+String Frase3 = "Esta revoluci" + String(char(162)) + "n no ser" + String(char(160)) + " silenciada.";
+String Frase4 = "Somos la libertad de prensa que te prometieron.";
+String Frase5 = "Dile al que te est" + String(char(160)) + " informando, que te est" + String(char(160)) + " mal informando.";
+String Frase6 = "Inf" + String(char(162)) + "rmense, vagos.";
+String Frase7 = "Los medios independientes no lloran, pero tampoco facturan.";
+String Frase8 = "Siempre independiente, nunca inindependiente.";
+String Frase9 = "Acabo de presentarme a mi convocatoria 1.000.000, abr" + String(char(160)) + "zame.";
+String Frase10 = "Soy independiente y sensible";
+
+/**
+Si la crisis lleva 20 años, tal vez ya no es una crisis. 
+Los medios independientes no son obsoletos, tu iPhone sí.
+Esta revolución no será silenciada.
+Somos la libertad de prensa que te prometieron.
+Dile al que te está informando, que te está mal informando.
+Infórmense, vagos.
+Los medios independientes no lloran, pero tampoco facturan.
+Siempre independiente, nunca inindependiente.
+Acabo de presentarme a mi convocatoria 1.000.000, abrázame
+Soy independiente y sensible
+**/
+
+void imprimirFrase(String frase, int indiceColor) {
+  int longitud = frase.length();
+  matrix.setTextColor(colors[indiceColor]);
+  
+  for(int i = matrix.width(); i> -longitud * 6; i--) {
+    matrix.setCursor(--i, 0);
+    matrix.fillScreen(0);
+    matrix.print(frase);
+    matrix.show();
+    delay(120);
+  }
+}
 
 void loop() {
   
   //rainbow(1);             // Flowing rainbow cycle along the whole strip
-  //theaterChaseRainbow(30);
+  theaterChaseRainbow(30);
    // Rainbow-enhanced theaterChase variant
-  
-  matrix.setTextColor(colors[0]);
-  
-  for(int i=matrix.width(); i>-Longitud*6; i--) {
-    matrix.setCursor(--i, 0);
-    matrix.fillScreen(0);
-    matrix.print(Palabra);
-    matrix.show();
-    delay(120);
-  }
-
-  matrix.setTextColor(colors[1]);
-
-  for(int i=matrix.width(); i>-Longitud2*6; i--) {
-    matrix.setCursor(--i, 0);
-    matrix.fillScreen(0);
-    matrix.print(Palabra2);
-    matrix.show();
-    delay(120);
-  }
-  
-//  
-//  matrix.fillScreen(0);
-//  for(int i=24; i>-48; i--){
-//    matrix.setCursor(i, 0);
-//    matrix.print(F("Howdy"));
-//    matrix.show();
-//    delay(100);
-//  }
-  
+  //imprimirFrase(Frase0, 0);
+  imprimirFrase(Frase1, 0);
+  imprimirFrase(Frase2, 1);
+  imprimirFrase(Frase3, 2);
+  imprimirFrase(Frase4, 0);
+  imprimirFrase(Frase5, 1);
+  imprimirFrase(Frase6, 2);
+  imprimirFrase(Frase7, 0);
+  imprimirFrase(Frase8, 1);
+  imprimirFrase(Frase9, 2);
+  imprimirFrase(Frase10, 0);
 }
 
 
@@ -190,4 +215,5 @@ void theaterChaseRainbow(int wait) {
     }
   }
 }
+
 ```
