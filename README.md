@@ -16,23 +16,18 @@ El nombre de la placa es: NodeMCU (ESP-12E Module)
 ```cpp
 #include <Adafruit_GFX.h>
 #include <Adafruit_NeoMatrix.h>
-// #include <Fonts/FreeMonoBoldOblique12pt7b.h>
-// #include <Fonts/FreeSerif9pt7b.h>
-// tft.setFont(&FreeMonoBoldOblique12pt7b);
-// tft.setFont();
 #ifndef PSTR
-#define PSTR
+  #define PSTR
 #endif
 
 #include <Adafruit_NeoPixel.h>
 #ifdef __AVR__
-#include <avr/power.h>
+  #include <avr/power.h>
 #endif
 
+#define PIN_DATOS    4
+#define NUMERO_DE_PIXELES 192
 
-#define LED_PIN    4
-#define LED_COUNT 192
-Adafruit_NeoPixel strip(LED_COUNT, LED_PIN, NEO_GRB + NEO_KHZ800);
 // Argument 1 = Number of pixels in NeoPixel strip
 // Argument 2 = Arduino pin number (most are valid)
 // Argument 3 = Pixel type flags, add together as needed:
@@ -41,9 +36,10 @@ Adafruit_NeoPixel strip(LED_COUNT, LED_PIN, NEO_GRB + NEO_KHZ800);
 //   NEO_GRB     Pixels are wired for GRB bitstream (most NeoPixel products)
 //   NEO_RGB     Pixels are wired for RGB bitstream (v1 FLORA pixels, not v2)
 //   NEO_RGBW    Pixels are wired for RGBW bitstream (NeoPixel RGBW products)
+Adafruit_NeoPixel strip(NUMERO_DE_PIXELES, PIN_DATOS, NEO_GRB + NEO_KHZ800);
 
-Adafruit_NeoMatrix matrix = Adafruit_NeoMatrix(8, 8, 3, 1, LED_PIN,
-  NEO_TILE_TOP   + NEO_TILE_LEFT   + NEO_TILE_COLUMNS   + NEO_TILE_PROGRESSIVE +
+Adafruit_NeoMatrix matrix = Adafruit_NeoMatrix(8, 8, 3, 1, PIN_DATOS,
+  NEO_TILE_TOP + NEO_TILE_LEFT + NEO_TILE_COLUMNS + NEO_TILE_PROGRESSIVE +
   NEO_MATRIX_TOP + NEO_MATRIX_LEFT + NEO_MATRIX_ROWS + NEO_MATRIX_PROGRESSIVE,
   NEO_GRB + NEO_KHZ800);
 
@@ -51,8 +47,7 @@ const uint16_t colors[] = {
   matrix.Color(255, 127, 0),
   matrix.Color(87, 35, 100),
   matrix.Color(0, 0, 255)
-  };
-// setup() function -- runs once at startup --------------------------------
+};
 
 void setup() {
   Serial.begin(9600);
@@ -120,11 +115,7 @@ void imprimirFrase(String frase, int indiceColor) {
 }
 
 void loop() {
-  
-  //rainbow(1);             // Flowing rainbow cycle along the whole strip
   theaterChaseRainbow(30);
-   // Rainbow-enhanced theaterChase variant
-  //imprimirFrase(Frase0, 0);
   imprimirFrase(Frase1, 0);
   imprimirFrase(Frase2, 1);
   imprimirFrase(Frase3, 2);
