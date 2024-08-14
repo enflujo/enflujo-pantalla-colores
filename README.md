@@ -1,11 +1,13 @@
 # Pantalla de Colores
 
-La placa dentro de la pantalla es LoL1n new NodeMcu v3
+La placa dentro de la pantalla es **LoL1n new NodeMCU v3**
+
+![Pines de la placa NodeMCU v3](./recursos/NodeMCU-V3.png.webp)
 
 - Instalar driver de CH340G: https://sparks.gogo.co.nz/ch340.html
 - https://www.instructables.com/Getting-Started-With-ESP8266LiLon-NodeMCU-V3Flashi/
 
-la pantalla está conectada al pin GPIO 4
+La pantalla está conectada al pin GPIO 4
 
 ## Placa y puerto en Arduino
 
@@ -87,19 +89,6 @@ String Frase7 = "Los medios independientes no lloran, pero tampoco facturan.";
 String Frase8 = "Siempre independiente, nunca inindependiente.";
 String Frase9 = "Acabo de presentarme a mi convocatoria 1.000.000, abr" + String(char(160)) + "zame.";
 String Frase10 = "Soy independiente y sensible";
-
-/**
-Si la crisis lleva 20 años, tal vez ya no es una crisis. 
-Los medios independientes no son obsoletos, tu iPhone sí.
-Esta revolución no será silenciada.
-Somos la libertad de prensa que te prometieron.
-Dile al que te está informando, que te está mal informando.
-Infórmense, vagos.
-Los medios independientes no lloran, pero tampoco facturan.
-Siempre independiente, nunca inindependiente.
-Acabo de presentarme a mi convocatoria 1.000.000, abrázame
-Soy independiente y sensible
-**/
 
 void imprimirFrase(String frase, int indiceColor) {
   int longitud = frase.length();
